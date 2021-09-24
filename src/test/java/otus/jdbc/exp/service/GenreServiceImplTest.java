@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataIntegrityViolationException;
-import otus.jdbc.exp.dao.AuthorsDAOImpl;
 import otus.jdbc.exp.dao.GenresDAOImpl;
-import otus.jdbc.exp.entity.Author;
 import otus.jdbc.exp.entity.Genre;
 
 import java.util.Optional;
@@ -25,9 +23,8 @@ class GenreServiceImplTest {
 
     private static final String GENRE = "Fantasy";
     private static final String GENRE_2 = "genre";
-    private static final int LIST_SIZE_1 = 2;
-    private static final int LIST_SIZE_2 = 3;
-    private static final int LIST_SIZE_3 = 4;
+    private static final int LIST_SIZE_1 = 3;
+    private static final int LIST_SIZE_2 = 4;
 
     @Test
     public void getGenreTest() {
@@ -37,7 +34,7 @@ class GenreServiceImplTest {
 
     @Test
     public void getAllGenreTest(){
-        assertEquals(CollectionUtils.size(service.getAllGenres()), LIST_SIZE_2);
+        assertEquals(CollectionUtils.size(service.getAllGenres()), LIST_SIZE_1);
     }
 
     @Test
@@ -51,7 +48,7 @@ class GenreServiceImplTest {
     public void saveGenreTest() {
         Genre genre = new Genre(4, GENRE_2);
         service.saveGenre(genre);
-        assertEquals(service.getAllGenres().size(), LIST_SIZE_3);
+        assertEquals(service.getAllGenres().size(), LIST_SIZE_2);
     }
 
     @Test

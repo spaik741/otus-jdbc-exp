@@ -22,8 +22,8 @@ public class AuthorCommands {
     }
 
     @ShellMethod(value = "Save author", key = {"sa", "saveAuthor", "ia", "insertAuthor"})
-    public void save(long id, String name) {
-        Author author = new Author(id, name);
+    public void save(long id, String firstName, String lastName) {
+        Author author = new Author(id, firstName, lastName);
         if (authorsService.saveAuthor(author)) {
             ioService.printString("Автор сохранен. " + author);
         } else {
@@ -55,6 +55,5 @@ public class AuthorCommands {
         } else {
             ioService.printString("Автор не удален. ");
         }
-
     }
 }

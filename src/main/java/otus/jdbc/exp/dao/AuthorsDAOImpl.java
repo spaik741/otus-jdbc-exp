@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import otus.jdbc.exp.entity.Author;
-import otus.jdbc.exp.entity.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,14 +22,14 @@ public class AuthorsDAOImpl implements AuthorsDAO {
 
     @Override
     public boolean insert(Author author) {
-        int answer = jdbc.update("insert into authors (id, `name`) values (:id, :name)",
-                Map.of("id", author.getId(), "name", author.getName()));
+        int answer = jdbc.update("insert into authors (id, f_name, l_name) values (:id, :f_name, :l_name)",
+                Map.of("id", author.getId(), "f_name", author.getFirstName(), "l_name", author.getLastName()));
         return BooleanUtils.toBoolean(answer);
     }
 
     @Override
     public Author getById(long id) {
-        return jdbc.queryForObject("select * from authors where id = :id", Map.of("id", id), new AuthorMapper());
+        return jdbc.queryForObject("select id, f_name, l_name from authors where id = :id", Map.of("id", id), new AuthorMapper());
     }
 
     @Override
@@ -46,8 +45,8 @@ public class AuthorsDAOImpl implements AuthorsDAO {
 
     @Override
     public boolean update(Author author) {
-        int answer = jdbc.update("update authors set `name` = :name where id = :id",
-                Map.of("id", author.getId(), "name", author.getName()));
+        int answer = jdbc.update("update authors set f_name = :f_name, l_name = :l_name where id = :id",
+                Map.of("id", author.getId(), "f_name", author.getFirstName(), "l_name", author.getLastName()));
         return BooleanUtils.toBoolean(answer);
     }
 
@@ -56,8 +55,9 @@ public class AuthorsDAOImpl implements AuthorsDAO {
         @Override
         public Author mapRow(ResultSet resultSet, int i) throws SQLException {
             long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            return new Author(id, name);
+            String first = resultSet.getString("f_name");
+            String last = resultSet.getString("l_name");
+            return new Author(id, first, last);
         }
     }
 }

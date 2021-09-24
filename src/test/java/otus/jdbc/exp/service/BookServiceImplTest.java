@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import otus.jdbc.exp.dao.BooksDAOImpl;
+import otus.jdbc.exp.entity.Author;
 import otus.jdbc.exp.entity.Book;
+import otus.jdbc.exp.entity.Genre;
 
 import java.util.Optional;
 
@@ -29,7 +31,7 @@ class BookServiceImplTest {
     @Test
     public void getBookTest() {
         Optional<Book> book = service.getBookById(1);
-        assertEquals(book.get().getIdAuthor(), AUTHOR_ID);
+        assertEquals(book.get().getAuthor().getId(), AUTHOR_ID);
     }
 
     @Test
@@ -45,14 +47,14 @@ class BookServiceImplTest {
 
     @Test
     public void saveBookTest() {
-        Book book = new Book(4, BOOK_NAME, 1, 2);
+        Book book = new Book(4, BOOK_NAME, new Author(1, "a", "b"), new Genre(1, "b"));
         service.saveBook(book);
         assertEquals(service.getAllBooks().size(), LIST_SIZE_1);
     }
 
     @Test
     public void updateBookTest() {
-        Book book = new Book(1, BOOK_NAME, 1, 2);
+        Book book = new Book(1, BOOK_NAME, new Author(1, "a", "b"), new Genre(1, "b"));
         service.saveBook(book);
         assertEquals(service.getBookById(1).get().getName(), BOOK_NAME);
     }

@@ -1,5 +1,5 @@
-insert into authors (id, `name`) values (1, 'Stephen King'),
-(2, 'Suzanne Collins');
+insert into authors (id, f_name, l_name) values (1, 'Stephen', ' King'),
+(2, 'Suzanne', 'Collins');
 insert into genres (id, genre) values (1, 'Fantasy'),
 (2, 'Horror'),
 (3, 'Teaching');

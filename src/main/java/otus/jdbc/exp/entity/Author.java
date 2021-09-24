@@ -8,12 +8,14 @@ import lombok.Data;
 public class Author {
 
     private long id;
-    private String name;
+    private String firstName;
+    private String lastName;
 
     @Override
     public String toString() {
         return "Author:" +
                 "id=" + id +
-                ", name='" + name + '.';
+                ", firstName='" + firstName +
+                ", lastName='" + lastName +'.';
     }
 }

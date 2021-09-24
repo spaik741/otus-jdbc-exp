@@ -9,15 +9,15 @@ public class Book {
 
     private long id;
     private String name;
-    private long idAuthor;
-    private long idGenre;
+    private Author author;
+    private Genre genre;
 
     @Override
     public String toString() {
         return "Book: " +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", author=" + idAuthor +
-                ", genre=" + idGenre + ".";
+                ", author=" + author +
+                ", genre=" + genre + ".";
     }
 }
