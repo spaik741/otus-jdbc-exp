@@ -1,4 +1,4 @@
-package otus.jdbc.exp.service;
+package otus.jdbc.exp.dao;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Test;
@@ -6,20 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataIntegrityViolationException;
-import otus.jdbc.exp.dao.GenresDAOImpl;
 import otus.jdbc.exp.entity.Genre;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JdbcTest
-@Import({GenreServiceImpl.class, GenresDAOImpl.class})
-class GenreServiceImplTest {
+@Import({GenresDAOImpl.class})
+class GenresDAOImplTest {
 
     @Autowired
-    private GenresService service;
+    private GenresDAO dao;
 
     private static final String GENRE = "Fantasy";
     private static final String GENRE_2 = "genre";
@@ -28,33 +25,33 @@ class GenreServiceImplTest {
 
     @Test
     public void getGenreTest() {
-        Optional<Genre> genre = service.getGenreById(1);
-        assertEquals(genre.get().getGenre(), GENRE);
+        Genre genre = dao.getById(1);
+        assertEquals(genre.getGenre(), GENRE);
     }
 
     @Test
-    public void getAllGenreTest(){
-        assertEquals(CollectionUtils.size(service.getAllGenres()), LIST_SIZE_1);
+    public void getAllGenreTest() {
+        assertEquals(CollectionUtils.size(dao.getAll()), LIST_SIZE_1);
     }
 
     @Test
     public void deleteGenreTest() {
         assertThrows(DataIntegrityViolationException.class, () -> {
-            service.deleteGenre(1);
+            dao.deleteById(1);
         });
     }
 
     @Test
     public void saveGenreTest() {
         Genre genre = new Genre(4, GENRE_2);
-        service.saveGenre(genre);
-        assertEquals(service.getAllGenres().size(), LIST_SIZE_2);
+        dao.insert(genre);
+        assertEquals(dao.getAll().size(), LIST_SIZE_2);
     }
 
     @Test
     public void updateGenreTest() {
         Genre genry = new Genre(1, GENRE_2);
-        service.saveGenre(genry);
-        assertEquals(service.getGenreById(1).get().getGenre(), GENRE_2);
+        dao.update(genry);
+        assertEquals(dao.getById(1).getGenre(), GENRE_2);
     }
 }

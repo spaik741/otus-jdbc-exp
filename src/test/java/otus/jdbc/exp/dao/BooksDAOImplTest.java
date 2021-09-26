@@ -1,23 +1,19 @@
-package otus.jdbc.exp.service;
+package otus.jdbc.exp.dao;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
-import otus.jdbc.exp.dao.BooksDAOImpl;
 import otus.jdbc.exp.entity.Author;
 import otus.jdbc.exp.entity.Book;
 import otus.jdbc.exp.entity.Genre;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @JdbcTest
-@Import({BooksDAOImpl.class, BookServiceImpl.class})
-class BookServiceImplTest {
+@Import({BooksDAOImpl.class})
+class BooksDAOImplTest {
 
     private static final int LIST_SIZE_1 = 4;
     private static final int LIST_SIZE_2 = 2;
@@ -26,37 +22,36 @@ class BookServiceImplTest {
     private static final String BOOK_NAME = "Nothing";
 
     @Autowired
-    private BooksService service;
+    private BooksDAO dao;
 
     @Test
     public void getBookTest() {
-        Optional<Book> book = service.getBookById(1);
-        assertEquals(book.get().getAuthor().getId(), AUTHOR_ID);
+        Book book = dao.getById(1);
+        assertEquals(book.getAuthor().getId(), AUTHOR_ID);
     }
 
     @Test
-    public void getAllBooksTest(){
-        assertEquals(CollectionUtils.size(service.getAllBooks()), LIST_SIZE_3);
+    public void getAllBooksTest() {
+        assertEquals(CollectionUtils.size(dao.getAll()), LIST_SIZE_3);
     }
 
     @Test
     public void deleteBookTest() {
-        service.deleteBook(1);
-        assertEquals(service.getAllBooks().size(), LIST_SIZE_2);
+        dao.deleteById(1);
+        assertEquals(dao.getAll().size(), LIST_SIZE_2);
     }
 
     @Test
     public void saveBookTest() {
         Book book = new Book(4, BOOK_NAME, new Author(1, "a", "b"), new Genre(1, "b"));
-        service.saveBook(book);
-        assertEquals(service.getAllBooks().size(), LIST_SIZE_1);
+        dao.insert(book);
+        assertEquals(dao.getAll().size(), LIST_SIZE_1);
     }
 
     @Test
     public void updateBookTest() {
         Book book = new Book(1, BOOK_NAME, new Author(1, "a", "b"), new Genre(1, "b"));
-        service.saveBook(book);
-        assertEquals(service.getBookById(1).get().getName(), BOOK_NAME);
+        dao.update(book);
+        assertEquals(dao.getById(1).getName(), BOOK_NAME);
     }
-
 }

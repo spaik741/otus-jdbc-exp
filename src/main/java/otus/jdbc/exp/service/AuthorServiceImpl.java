@@ -1,7 +1,6 @@
 package otus.jdbc.exp.service;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import otus.jdbc.exp.dao.AuthorsDAO;
 import otus.jdbc.exp.entity.Author;
@@ -11,9 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuthorServiceImpl implements AuthorsService{
+public class AuthorServiceImpl implements AuthorsService {
 
-    @Autowired
     private final AuthorsDAO dao;
 
     public AuthorServiceImpl(AuthorsDAO dao) {
@@ -22,7 +20,7 @@ public class AuthorServiceImpl implements AuthorsService{
 
     @Override
     public List<Author> getAllAuthors() {
-        return CollectionUtils.isEmpty(dao.getAll())? new ArrayList<>(): dao.getAll();
+        return CollectionUtils.isEmpty(dao.getAll()) ? new ArrayList<>() : dao.getAll();
     }
 
     @Override

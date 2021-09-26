@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class GenresDAOImpl implements GenresDAO{
+public class GenresDAOImpl implements GenresDAO {
 
     private final NamedParameterJdbcOperations jdbc;
 
@@ -23,8 +23,8 @@ public class GenresDAOImpl implements GenresDAO{
 
     @Override
     public boolean insert(Genre genre) {
-        int answer = jdbc.update("insert into genres (id, genre) values (:id, :genre)",
-                Map.of("id", genre.getId(), "genre", genre.getGenre()));
+        int answer = jdbc.update("insert into genres (genre) values (:genre)",
+                Map.of("genre", genre.getGenre()));
         return BooleanUtils.toBoolean(answer);
     }
 

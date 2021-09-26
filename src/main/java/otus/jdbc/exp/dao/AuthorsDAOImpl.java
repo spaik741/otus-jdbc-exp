@@ -22,8 +22,8 @@ public class AuthorsDAOImpl implements AuthorsDAO {
 
     @Override
     public boolean insert(Author author) {
-        int answer = jdbc.update("insert into authors (id, f_name, l_name) values (:id, :f_name, :l_name)",
-                Map.of("id", author.getId(), "f_name", author.getFirstName(), "l_name", author.getLastName()));
+        int answer = jdbc.update("insert into authors (f_name, l_name) values (:f_name, :l_name)",
+                Map.of("f_name", author.getFirstName(), "l_name", author.getLastName()));
         return BooleanUtils.toBoolean(answer);
     }
 
@@ -34,7 +34,7 @@ public class AuthorsDAOImpl implements AuthorsDAO {
 
     @Override
     public List<Author> getAll() {
-        return jdbc.query("select * from authors", new AuthorMapper());
+        return jdbc.query("select id, f_name, l_name from authors", new AuthorMapper());
     }
 
     @Override
