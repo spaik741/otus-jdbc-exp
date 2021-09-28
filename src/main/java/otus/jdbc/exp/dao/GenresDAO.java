@@ -6,13 +6,12 @@ import java.util.List;
 
 public interface GenresDAO {
 
-    boolean insert(Genre book);
+    Genre save(Genre book);
 
-    Genre getById(long id);
+    Genre findById(long id);
 
-    List<Genre> getAll();
+    List<Genre> findAll();
 
     boolean deleteById(long id);
 
-    boolean update(Genre book);
 }

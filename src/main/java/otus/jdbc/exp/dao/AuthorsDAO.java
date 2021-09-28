@@ -6,13 +6,12 @@ import java.util.List;
 
 public interface AuthorsDAO {
 
-    boolean insert(Author author);
+    Author save(Author author);
 
-    Author getById(long id);
+    Author findById(long id);
 
-    List<Author> getAll();
+    List<Author> findAll();
 
     boolean deleteById(long id);
 
-    boolean update(Author author);
 }

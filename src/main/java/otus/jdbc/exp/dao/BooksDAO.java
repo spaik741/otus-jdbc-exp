@@ -6,13 +6,12 @@ import java.util.List;
 
 public interface BooksDAO {
 
-    boolean insert(Book book);
+    Book save(Book book);
 
-    Book getById(long id);
+    Book findById(long id);
 
-    List<Book> getAll();
+    List<Book> findAll();
 
     boolean deleteById(long id);
 
-    boolean update(Book book);
 }

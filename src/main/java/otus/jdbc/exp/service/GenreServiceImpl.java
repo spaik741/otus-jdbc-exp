@@ -2,8 +2,8 @@ package otus.jdbc.exp.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import otus.jdbc.exp.dao.GenresDAO;
-import otus.jdbc.exp.entity.Author;
 import otus.jdbc.exp.entity.Genre;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class GenreServiceImpl implements GenresService{
 
     @Override
     public List<Genre> getAllGenres() {
-        return CollectionUtils.isEmpty(dao.getAll())? new ArrayList<>(): dao.getAll();
+        return CollectionUtils.isEmpty(dao.findAll())? new ArrayList<>(): dao.findAll();
     }
 
     @Override

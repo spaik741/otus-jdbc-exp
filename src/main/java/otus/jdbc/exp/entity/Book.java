@@ -2,14 +2,34 @@ package otus.jdbc.exp.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Data
+@Entity
+@Table(name = "books")
 @AllArgsConstructor
+@NoArgsConstructor
+@NamedEntityGraph(name = "library-books-graph",
+        attributeNodes = {@NamedAttributeNode("author"),
+                @NamedAttributeNode("genre"),
+                @NamedAttributeNode("comment")})
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @JoinColumn(name = "id_author")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Author author;
+    @JoinColumn(name = "id_genre")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Genre genre;
     @Fetch(FetchMode.SELECT)
     @JoinTable(name = "books_comments",

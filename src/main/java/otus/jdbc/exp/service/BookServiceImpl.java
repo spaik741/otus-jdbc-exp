@@ -21,7 +21,7 @@ public class BookServiceImpl implements BooksService{
 
     @Override
     public List<Book> getAllBooks() {
-        return CollectionUtils.isEmpty(dao.getAll())? new ArrayList<>(): dao.getAll();
+        return CollectionUtils.isEmpty(dao.findAll())? new ArrayList<>(): dao.findAll();
     }
 
     @Override

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import otus.jdbc.exp.entity.Author;
 import otus.jdbc.exp.entity.Genre;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,27 +18,32 @@ import java.util.Map;
 @Repository
 public class AuthorsDAOImpl implements AuthorsDAO {
 
-    private final NamedParameterJdbcOperations jdbc;
+    @PersistenceContext
+    private final EntityManager em;
 
-    public AuthorsDAOImpl(NamedParameterJdbcOperations jdbc) {
-        this.jdbc = jdbc;
+    public AuthorsDAOImpl(EntityManager em) {
+        this.em = em;
     }
 
     @Override
-    public boolean insert(Author author) {
-        int answer = jdbc.update("insert into authors (f_name, l_name) values (:f_name, :l_name)",
-                Map.of("f_name", author.getFirstName(), "l_name", author.getLastName()));
-        return BooleanUtils.toBoolean(answer);
+    public Author save(Author author) {
+        if (author.getId() == 0) {
+            em.persist(author);
+            return author;
+        } else {
+            return em.merge(author);
+        }
     }
 
     @Override
-    public Author getById(long id) {
-        return jdbc.queryForObject("select id, f_name, l_name from authors where id = :id", Map.of("id", id), new AuthorMapper());
+    public Author findById(long id) {
+        return em.find(Author.class, id);
     }
 
     @Override
-    public List<Author> getAll() {
-        return jdbc.query("select id, f_name, l_name from authors", new AuthorMapper());
+    public List<Author> findAll() {
+        Query query = em.createQuery("select a from Author a", Author.class);
+        return query.getResultList();
     }
 
     @Override
@@ -45,21 +53,4 @@ public class AuthorsDAOImpl implements AuthorsDAO {
         return BooleanUtils.toBoolean(query.executeUpdate());
     }
 
-    @Override
-    public boolean update(Author author) {
-        int answer = jdbc.update("update authors set f_name = :f_name, l_name = :l_name where id = :id",
-                Map.of("id", author.getId(), "f_name", author.getFirstName(), "l_name", author.getLastName()));
-        return BooleanUtils.toBoolean(answer);
-    }
-
-    private static class AuthorMapper implements RowMapper<Author> {
-
-        @Override
-        public Author mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String first = resultSet.getString("f_name");
-            String last = resultSet.getString("l_name");
-            return new Author(id, first, last);
-        }
-    }
 }

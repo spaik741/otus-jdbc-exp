@@ -1,6 +1,7 @@
 package otus.jdbc.exp.service;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import otus.jdbc.exp.dao.AuthorsDAO;
@@ -21,7 +22,7 @@ public class AuthorServiceImpl implements AuthorsService {
 
     @Override
     public List<Author> getAllAuthors() {
-        return CollectionUtils.isEmpty(dao.getAll()) ? new ArrayList<>() : dao.getAll();
+        return CollectionUtils.isEmpty(dao.findAll()) ? new ArrayList<>() : dao.findAll();
     }
 
     @Override
