@@ -34,9 +34,7 @@ public class BooksDAOImpl implements BooksDAO {
 
     @Override
     public List<Book> findAll() {
-        EntityGraph<?> entityGraph = em.getEntityGraph("library-books-graph");
-        TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
-        query.setHint("javax.persistence.fetchgraph", entityGraph);
+        Query query = em.createQuery("select b from Book b", Book.class);
         return query.getResultList();
     }
 

@@ -32,31 +32,31 @@ class BooksDAOImplTest {
     @Test
     public void getBookTest() {
         Book book = dao.findById(1);
-        assertEquals(book.getAuthor().getId(), AUTHOR_ID);
+        assertEquals(AUTHOR_ID, book.getAuthor().getId());
     }
 
     @Test
     public void getAllBooksTest() {
-        assertEquals(CollectionUtils.size(dao.findAll()), LIST_SIZE_3);
+        assertEquals(LIST_SIZE_3, CollectionUtils.size(dao.findAll()));
     }
 
     @Test
     public void deleteBookTest() {
         dao.deleteById(1);
-        assertEquals(dao.findAll().size(), LIST_SIZE_2);
+        assertEquals(LIST_SIZE_2, dao.findAll().size());
     }
 
     @Test
     public void saveBookTest() {
         Book book = new Book(4L, BOOK_NAME, new Author(1, "a", "b"), new Genre(1, "b"));
         dao.save(book);
-        assertEquals(dao.findAll().size(), LIST_SIZE_1);
+        assertEquals(LIST_SIZE_1, dao.findAll().size());
     }
 
     @Test
     public void updateBookTest() {
         Book book = new Book(1L, BOOK_NAME, new Author(1, "a", "b"), new Genre(1, "b"));
         dao.save(book);
-        assertEquals(dao.findById(1).getName(), BOOK_NAME);
+        assertEquals(BOOK_NAME, dao.findById(1).getName());
     }
 }

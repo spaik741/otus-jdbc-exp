@@ -27,12 +27,12 @@ class AuthorsDAOImplTest {
     @Test
     public void getAuthorTest() {
         Author author = dao.findById(1);
-        assertEquals(author.getFirstName(), AUTHOR_FIRST_NAME);
+        assertEquals(AUTHOR_FIRST_NAME, author.getFirstName());
     }
 
     @Test
     public void getAllAuthorTest() {
-        assertEquals(CollectionUtils.size(dao.findAll()), LIST_SIZE_2);
+        assertEquals(LIST_SIZE_2, CollectionUtils.size(dao.findAll()));
     }
 
     @Test
@@ -46,13 +46,13 @@ class AuthorsDAOImplTest {
     public void saveAuthorTest() {
         Author author = new Author(4, AUTHOR_FIRST_NAME_2, "l");
         dao.save(author);
-        assertEquals(dao.findAll().size(), LIST_SIZE_3);
+        assertEquals(LIST_SIZE_3, dao.findAll().size());
     }
 
     @Test
     public void updateAuthorTest() {
         Author author = new Author(1, AUTHOR_FIRST_NAME_2, "l");
         dao.save(author);
-        assertEquals(dao.findById(1).getFirstName(), AUTHOR_FIRST_NAME_2);
+        assertEquals(AUTHOR_FIRST_NAME_2, dao.findById(1).getFirstName());
     }
 }

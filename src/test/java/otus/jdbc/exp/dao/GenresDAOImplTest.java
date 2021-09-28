@@ -32,7 +32,7 @@ class GenresDAOImplTest {
 
     @Test
     public void getAllGenreTest() {
-        assertEquals(CollectionUtils.size(dao.findAll()), LIST_SIZE_1);
+        assertEquals(LIST_SIZE_1, CollectionUtils.size(dao.findAll()));
     }
 
     @Test
@@ -46,13 +46,13 @@ class GenresDAOImplTest {
     public void saveGenreTest() {
         Genre genre = new Genre(4, GENRE_2);
         dao.save(genre);
-        assertEquals(dao.findAll().size(), LIST_SIZE_2);
+        assertEquals(LIST_SIZE_2, dao.findAll().size());
     }
 
     @Test
     public void updateGenreTest() {
         Genre genry = new Genre(1, GENRE_2);
         dao.save(genry);
-        assertEquals(dao.findById(1).getGenre(), GENRE_2);
+        assertEquals(GENRE_2, dao.findById(1).getGenre());
     }
 }
