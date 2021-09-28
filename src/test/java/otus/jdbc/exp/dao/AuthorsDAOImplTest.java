@@ -3,15 +3,16 @@ package otus.jdbc.exp.dao;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataIntegrityViolationException;
 import otus.jdbc.exp.entity.Author;
+
+import javax.persistence.PersistenceException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@JdbcTest
+@DataJpaTest
 @Import({AuthorsDAOImpl.class})
 class AuthorsDAOImplTest {
 
@@ -25,18 +26,18 @@ class AuthorsDAOImplTest {
 
     @Test
     public void getAuthorTest() {
-        Author author = dao.getById(1);
+        Author author = dao.findById(1);
         assertEquals(author.getFirstName(), AUTHOR_FIRST_NAME);
     }
 
     @Test
     public void getAllAuthorTest() {
-        assertEquals(CollectionUtils.size(dao.getAll()), LIST_SIZE_2);
+        assertEquals(CollectionUtils.size(dao.findAll()), LIST_SIZE_2);
     }
 
     @Test
     public void deleteAuthorTest() {
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(PersistenceException.class, () -> {
             dao.deleteById(1);
         });
     }
@@ -44,14 +45,14 @@ class AuthorsDAOImplTest {
     @Test
     public void saveAuthorTest() {
         Author author = new Author(4, AUTHOR_FIRST_NAME_2, "l");
-        dao.insert(author);
-        assertEquals(dao.getAll().size(), LIST_SIZE_3);
+        dao.save(author);
+        assertEquals(dao.findAll().size(), LIST_SIZE_3);
     }
 
     @Test
     public void updateAuthorTest() {
         Author author = new Author(1, AUTHOR_FIRST_NAME_2, "l");
-        dao.update(author);
-        assertEquals(dao.getById(1).getFirstName(), AUTHOR_FIRST_NAME_2);
+        dao.save(author);
+        assertEquals(dao.findById(1).getFirstName(), AUTHOR_FIRST_NAME_2);
     }
 }

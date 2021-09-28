@@ -40,8 +40,9 @@ public class GenresDAOImpl implements GenresDAO {
 
     @Override
     public boolean deleteById(long id) {
-        int answer = jdbc.update("delete from genres where id = :id", Map.of("id", id));
-        return BooleanUtils.toBoolean(answer);
+        Query query = em.createQuery("delete from Genre g where g.id = :id");
+        query.setParameter("id", id);
+        return BooleanUtils.toBoolean(query.executeUpdate());
     }
 
     @Override

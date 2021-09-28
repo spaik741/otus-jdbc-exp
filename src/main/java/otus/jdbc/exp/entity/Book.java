@@ -11,6 +11,19 @@ public class Book {
     private String name;
     private Author author;
     private Genre genre;
+    @Fetch(FetchMode.SELECT)
+    @JoinTable(name = "books_comments",
+            joinColumns = @JoinColumn(name = "id_book"),
+            inverseJoinColumns = @JoinColumn(name = "id_comment"))
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comment;
+
+    public Book(Long id, String name, Author author, Genre genre) {
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
+        this.author = author;
+    }
 
     @Override
     public String toString() {
@@ -18,6 +31,7 @@ public class Book {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", author=" + author +
-                ", genre=" + genre + ".";
+                ", genre=" + genre +
+                ", genre=" + comment;
     }
 }

@@ -1,17 +1,11 @@
 package otus.jdbc.exp.dao;
 
 import org.apache.commons.lang3.BooleanUtils;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import otus.jdbc.exp.entity.Author;
 import otus.jdbc.exp.entity.Book;
-import otus.jdbc.exp.entity.Genre;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class BooksDAOImpl implements BooksDAO {

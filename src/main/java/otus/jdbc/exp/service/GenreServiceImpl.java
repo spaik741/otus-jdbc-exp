@@ -30,16 +30,16 @@ public class GenreServiceImpl implements GenresService{
     }
 
     @Override
+    @Transactional
     public boolean deleteGenre(long id) {
         return dao.deleteById(id);
     }
 
     @Override
+    @Transactional
     public boolean saveGenre(Genre genre) {
-        if (getGenreById(genre.getId()).isPresent()) {
-            return dao.update(genre);
-        } else {
-            return dao.insert(genre);
-        }
+
+            return dao.save(genre) != null;
+
     }
 }

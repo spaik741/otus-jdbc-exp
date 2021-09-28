@@ -2,6 +2,7 @@ package otus.jdbc.exp.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import otus.jdbc.exp.dao.BooksDAO;
 import otus.jdbc.exp.entity.Book;
 
@@ -29,17 +30,15 @@ public class BookServiceImpl implements BooksService{
     }
 
     @Override
+    @Transactional
     public boolean deleteBook(long id) {
         return dao.deleteById(id);
     }
 
     @Override
+    @Transactional
     public boolean saveBook(Book book) {
-        if (getBookById(book.getId()).isPresent()) {
-            return dao.update(book);
-        } else {
-            return dao.insert(book);
-        }
+        return dao.save(book) != null;
     }
 
 }

@@ -3,15 +3,16 @@ package otus.jdbc.exp.dao;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataIntegrityViolationException;
 import otus.jdbc.exp.entity.Genre;
+
+import javax.persistence.PersistenceException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@JdbcTest
+@DataJpaTest
 @Import({GenresDAOImpl.class})
 class GenresDAOImplTest {
 
@@ -25,18 +26,18 @@ class GenresDAOImplTest {
 
     @Test
     public void getGenreTest() {
-        Genre genre = dao.getById(1);
+        Genre genre = dao.findById(1);
         assertEquals(genre.getGenre(), GENRE);
     }
 
     @Test
     public void getAllGenreTest() {
-        assertEquals(CollectionUtils.size(dao.getAll()), LIST_SIZE_1);
+        assertEquals(CollectionUtils.size(dao.findAll()), LIST_SIZE_1);
     }
 
     @Test
     public void deleteGenreTest() {
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(PersistenceException.class, () -> {
             dao.deleteById(1);
         });
     }
@@ -44,14 +45,14 @@ class GenresDAOImplTest {
     @Test
     public void saveGenreTest() {
         Genre genre = new Genre(4, GENRE_2);
-        dao.insert(genre);
-        assertEquals(dao.getAll().size(), LIST_SIZE_2);
+        dao.save(genre);
+        assertEquals(dao.findAll().size(), LIST_SIZE_2);
     }
 
     @Test
     public void updateGenreTest() {
         Genre genry = new Genre(1, GENRE_2);
-        dao.update(genry);
-        assertEquals(dao.getById(1).getGenre(), GENRE_2);
+        dao.save(genry);
+        assertEquals(dao.findById(1).getGenre(), GENRE_2);
     }
 }

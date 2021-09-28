@@ -2,6 +2,7 @@ package otus.jdbc.exp.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import otus.jdbc.exp.dao.AuthorsDAO;
 import otus.jdbc.exp.entity.Author;
 
@@ -29,16 +30,14 @@ public class AuthorServiceImpl implements AuthorsService {
     }
 
     @Override
+    @Transactional
     public boolean deleteAuthor(long id) {
         return dao.deleteById(id);
     }
 
     @Override
+    @Transactional
     public boolean saveAuthor(Author author) {
-        if (getAuthorById(author.getId()).isPresent()) {
-            return dao.update(author);
-        } else {
-            return dao.insert(author);
-        }
+        return dao.save(author) != null;
     }
 }

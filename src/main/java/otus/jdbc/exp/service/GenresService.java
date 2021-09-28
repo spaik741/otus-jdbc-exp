@@ -1,6 +1,5 @@
 package otus.jdbc.exp.service;
 
-import otus.jdbc.exp.entity.Book;
 import otus.jdbc.exp.entity.Genre;
 
 import java.util.List;

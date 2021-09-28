@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import otus.jdbc.exp.entity.Author;
+import otus.jdbc.exp.entity.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,8 +40,9 @@ public class AuthorsDAOImpl implements AuthorsDAO {
 
     @Override
     public boolean deleteById(long id) {
-        int answer = jdbc.update("delete from authors where id = :id", Map.of("id", id));
-        return BooleanUtils.toBoolean(answer);
+        Query query = em.createQuery("delete from Author a where a.id = :id");
+        query.setParameter("id", id);
+        return BooleanUtils.toBoolean(query.executeUpdate());
     }
 
     @Override
