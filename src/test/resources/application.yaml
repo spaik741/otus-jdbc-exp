@@ -1,9 +1,56 @@
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: data.sql
+#      schema-locations: schema.sql
+
+#spring:
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: data.sql
+#      schema-locations: schema.sql
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    initialization-mode: always
+#
+#
+#  jpa:
+#    generate-ddl: false
+#    hibernate:
+#      ddl-auto: none
+#
+#    show-sql: true
+#
+#logging:
+#  level:
+#    ROOT: ERROR
 
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
+  shell:
+    interactive:
+      enabled: false
   sql:
     init:
       mode: always
       data-locations: data.sql
       schema-locations: schema.sql
+  datasource:
+    url: jdbc:h2:mem:testdb
+
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    ROOT: ERROR
