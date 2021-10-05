@@ -11,7 +11,7 @@ public interface AuthorsService {
 
     Optional<Author> getAuthorById(long id);
 
-    boolean deleteAuthor(long id);
+    void deleteAuthor(long id);
 
-    boolean saveAuthor(Author author);
+    Optional<Author> saveAuthor(Author author);
 }

@@ -2,7 +2,9 @@ package otus.orm.exp.dao;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
+import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
-@Import({GenresDAOImpl.class})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class GenresDAOImplTest {
 
     @Autowired
@@ -31,7 +33,7 @@ class GenresDAOImplTest {
 
     @Test
     public void getGenreTest() {
-        Genre genre = dao.findById(FIRST_GENRE);
+        Genre genre = dao.findById(FIRST_GENRE).get();
         Genre expectedGenre = em.find(Genre.class, FIRST_GENRE);
         assertThat(genre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
@@ -44,9 +46,7 @@ class GenresDAOImplTest {
 
     @Test
     public void deleteGenreTest() {
-        assertThrows(PersistenceException.class, () -> {
-            dao.deleteById(1);
-        });
+        dao.deleteById(FIRST_GENRE);
     }
 
     @Test

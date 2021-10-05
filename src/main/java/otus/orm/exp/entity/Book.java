@@ -14,26 +14,24 @@ import java.util.List;
 @Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "BookGraph",
+        attributeNodes = {
+                @NamedAttributeNode("genre"),
+                @NamedAttributeNode("author")
+        })
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @JoinColumn(name = "id_author")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Author author;
     @JoinColumn(name = "id_genre")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Genre genre;
-
-    public Book(Long id, String name, Author author, Genre genre) {
-        this.id = id;
-        this.name = name;
-        this.genre = genre;
-        this.author = author;
-    }
 
     @Override
     public String toString() {

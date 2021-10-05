@@ -4,7 +4,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import otus.orm.exp.dao.CommentsDAO;
+import otus.orm.exp.entity.Book;
 import otus.orm.exp.entity.Comment;
+import otus.orm.exp.entity.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,25 +24,25 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Comment> getAllComments() {
-        return CollectionUtils.isEmpty(dao.findAll()) ? new ArrayList<>() : dao.findAll();
+    public List<Comment> getAllComments(Book book) {
+        return CollectionUtils.isEmpty(dao.findAllByBook(book)) ? new ArrayList<>() : dao.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Comment> getCommentById(long id) {
-        return getAllComments().stream().filter(b -> b.getId() == id).findFirst();
+        return dao.findAll().stream().filter(b -> b.getId() == id).findFirst();
     }
 
     @Override
     @Transactional
-    public boolean deleteComment(long id) {
-        return dao.deleteById(id);
+    public void deleteComment(long id) {
+        dao.deleteById(id);
     }
 
     @Override
     @Transactional
-    public boolean saveComment(Comment comment) {
-        return dao.save(comment) != null;
+    public  Optional<Comment> saveComment(Comment comment) {
+        return Optional.of(dao.save(comment));
     }
 }

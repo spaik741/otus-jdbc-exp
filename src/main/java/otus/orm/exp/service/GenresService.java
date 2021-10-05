@@ -11,7 +11,7 @@ public interface GenresService {
 
     Optional<Genre> getGenreById(long id);
 
-    boolean deleteGenre(long id);
+    void deleteGenre(long id);
 
-    boolean saveGenre(Genre genre);
+    Optional<Genre> saveGenre(Genre genre);
 }
