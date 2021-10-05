@@ -1,6 +1,7 @@
 package otus.orm.exp.service.factory;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import otus.orm.exp.entity.Book;
 import otus.orm.exp.entity.Comment;
 import otus.orm.exp.service.BooksService;
@@ -18,6 +19,7 @@ public class CommentFactoryImpl implements CommentFactory {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Comment> createComment(String text, Date date, long idBook) {
         Comment comment = null;
         Optional<Book> bookOptional = booksService.getBookById(idBook);
