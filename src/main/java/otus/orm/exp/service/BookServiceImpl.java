@@ -33,14 +33,14 @@ public class BookServiceImpl implements BooksService{
 
     @Override
     @Transactional
-    public boolean deleteBook(long id) {
-        return dao.deleteById(id);
+    public void deleteBook(long id) {
+        dao.deleteById(id);
     }
 
     @Override
     @Transactional
-    public boolean saveBook(Book book) {
-        return dao.save(book) != null;
+    public Optional<Book> saveBook(Book book) {
+        return Optional.of(dao.save(book));
     }
 
 }

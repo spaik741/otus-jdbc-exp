@@ -7,10 +7,8 @@ import org.springframework.shell.standard.ShellOption;
 import otus.orm.exp.entity.Author;
 import otus.orm.exp.entity.Book;
 import otus.orm.exp.entity.Genre;
-import otus.orm.exp.service.AuthorsService;
 import otus.orm.exp.service.BooksService;
-import otus.orm.exp.service.CommentService;
-import otus.orm.exp.service.GenresService;
+import otus.orm.exp.service.factory.BookFactory;
 import otus.orm.exp.service.io.IOService;
 
 import java.util.List;
@@ -19,34 +17,28 @@ import java.util.Optional;
 @ShellComponent
 public class BookCommands {
 
-    private final AuthorsService authorsService;
-    private final GenresService genresService;
     private final BooksService booksService;
-    private final CommentService commentService;
     private final IOService ioService;
+    private final BookFactory bookFactory;
 
-    public BookCommands(AuthorsService authorsService, GenresService genresService, BooksService booksService, CommentService commentService, IOService ioService) {
-        this.authorsService = authorsService;
-        this.genresService = genresService;
+    public BookCommands(BooksService booksService, IOService ioService, BookFactory bookFactory) {
         this.booksService = booksService;
-        this.commentService = commentService;
         this.ioService = ioService;
+        this.bookFactory = bookFactory;
     }
 
     @ShellMethod(value = "Save book", key = {"sb", "saveBook", "ib", "insertBook"})
-    public void save(@ShellOption(value = "-i") long id,
-                     @ShellOption(value = "-n") String name,
+    public void save(@ShellOption(value = "-n") String name,
                      @ShellOption(value = "-a") long idAuthor,
                      @ShellOption(value = "-d") long idGenre) {
-        Optional<Author> author = authorsService.getAuthorById(idAuthor);
-        Optional<Genre> genre = genresService.getGenreById(idGenre);
-        if (author.isPresent() && genre.isPresent()) {
-            Book book = new Book(id, name, author.get(), genre.get());
-            if (booksService.saveBook(book)) {
-                ioService.printString("Книга сохранена. " + book);
-                return;
+        Optional<Book> book = bookFactory.createBook(name, idAuthor, idGenre);
+        if (book.isPresent()) {
+            try {
+                booksService.saveBook(book.get());
+                ioService.printString("Книга сохранена. " + book.get());
+            }catch (Exception e) {
+                ioService.printString("Книга не сохранена. ");
             }
-            ioService.printString("Книга не сохранена. ");
         }
     }
 
@@ -69,9 +61,10 @@ public class BookCommands {
 
     @ShellMethod(value = "Delete book", key = {"db", "deleteBook"})
     public void delete(long id) {
-        if (booksService.deleteBook(id)) {
+        try {
+            booksService.deleteBook(id);
             ioService.printString(String.format("Книга № [%s] удалена. ", id));
-        } else {
+        }catch (Exception e) {
             ioService.printString("Книга не удалена. ");
         }
     }

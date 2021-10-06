@@ -1,17 +1,14 @@
 package otus.orm.exp.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import otus.orm.exp.entity.Author;
 
 import java.util.List;
 
-public interface AuthorsDAO {
+public interface AuthorsDAO extends JpaRepository<Author, Long> {
 
-    Author save(Author author);
-
-    Author findById(long id);
-
+    @Override
     List<Author> findAll();
 
-    boolean deleteById(long id);
 
 }

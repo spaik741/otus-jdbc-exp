@@ -33,13 +33,13 @@ public class AuthorServiceImpl implements AuthorsService {
 
     @Override
     @Transactional
-    public boolean deleteAuthor(long id) {
-        return dao.deleteById(id);
+    public void deleteAuthor(long id) {
+        dao.deleteById(id);
     }
 
     @Override
     @Transactional
-    public boolean saveAuthor(Author author) {
-        return dao.save(author) != null;
+    public Optional<Author> saveAuthor(Author author) {
+        return Optional.of(dao.save(author));
     }
 }

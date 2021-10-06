@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GenreServiceImpl implements GenresService{
+public class GenreServiceImpl implements GenresService {
 
     private final GenresDAO dao;
 
@@ -21,7 +21,7 @@ public class GenreServiceImpl implements GenresService{
 
     @Override
     public List<Genre> getAllGenres() {
-        return CollectionUtils.isEmpty(dao.findAll())? new ArrayList<>(): dao.findAll();
+        return CollectionUtils.isEmpty(dao.findAll()) ? new ArrayList<>() : dao.findAll();
     }
 
     @Override
@@ -31,15 +31,13 @@ public class GenreServiceImpl implements GenresService{
 
     @Override
     @Transactional
-    public boolean deleteGenre(long id) {
-        return dao.deleteById(id);
+    public void deleteGenre(long id) {
+        dao.deleteById(id);
     }
 
     @Override
     @Transactional
-    public boolean saveGenre(Genre genre) {
-
-            return dao.save(genre) != null;
-
+    public Optional<Genre> saveGenre(Genre genre) {
+        return Optional.of(dao.save(genre));
     }
 }

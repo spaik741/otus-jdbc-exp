@@ -24,9 +24,10 @@ public class GenreCommands {
     @ShellMethod(value = "Save genre", key = {"sg", "saveGenre", "ig", "insertGenre"})
     public void save(long id, String name) {
         Genre genre = new Genre(id, name);
-        if (genresService.saveGenre(genre)) {
+        try {
+            genresService.saveGenre(genre);
             ioService.printString("Жанр сохранен. " + genre);
-        } else {
+        }catch (Exception e){
             ioService.printString("Жанр не сохранен. ");
         }
     }
@@ -50,9 +51,10 @@ public class GenreCommands {
 
     @ShellMethod(value = "Delete genre", key = {"dg", "deleteGenre"})
     public void delete(long id) {
-        if (genresService.deleteGenre(id)) {
+        try {
+            genresService.deleteGenre(id);
             ioService.printString(String.format("Жанр № [%s] удален. ", id));
-        } else {
+        }catch (Exception e){
             ioService.printString("Жанр не удален. ");
         }
     }

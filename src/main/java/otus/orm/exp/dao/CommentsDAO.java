@@ -1,15 +1,14 @@
 package otus.orm.exp.dao;
 
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+import otus.orm.exp.entity.Book;
 import otus.orm.exp.entity.Comment;
 
 import java.util.List;
 
-public interface CommentsDAO {
-    Comment save(Comment comment);
+public interface CommentsDAO extends JpaRepository<Comment, Long> {
 
-    Comment findById(long id);
+    List<Comment> findAllByBook(Book book);
 
-    List<Comment> findAll();
-
-    boolean deleteById(long id);
 }

@@ -2,7 +2,10 @@ package otus.orm.exp.dao;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
+import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
@@ -11,11 +14,12 @@ import otus.orm.exp.entity.Author;
 import javax.persistence.PersistenceException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
-@Import({AuthorsDAOImpl.class})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AuthorsDAOImplTest {
 
     @Autowired
@@ -32,7 +36,7 @@ class AuthorsDAOImplTest {
 
     @Test
     public void getAuthorTest() {
-        Author author = dao.findById(FIRST_AUTHOR);
+        Author author = dao.findById(FIRST_AUTHOR).get();
         Author expectedAuthor = em.find(Author.class, FIRST_AUTHOR);
         assertThat(author).usingRecursiveComparison().isEqualTo(expectedAuthor);
     }
@@ -46,9 +50,7 @@ class AuthorsDAOImplTest {
 
     @Test
     public void deleteAuthorTest() {
-        assertThrows(PersistenceException.class, () -> {
-            dao.deleteById(1);
-        });
+        dao.deleteById(FIRST_AUTHOR);
     }
 
     @Test

@@ -24,9 +24,10 @@ public class AuthorCommands {
     @ShellMethod(value = "Save author", key = {"sa", "saveAuthor", "ia", "insertAuthor"})
     public void save(long id, String firstName, String lastName) {
         Author author = new Author(id, firstName, lastName);
-        if (authorsService.saveAuthor(author)) {
+        try {
+            authorsService.saveAuthor(author);
             ioService.printString("Автор сохранен. " + author);
-        } else {
+        } catch (Exception e) {
             ioService.printString("Автор не сохранен. ");
         }
     }
@@ -50,9 +51,10 @@ public class AuthorCommands {
 
     @ShellMethod(value = "Delete author", key = {"da", "deleteAuthor"})
     public void delete(long id) {
-        if (authorsService.deleteAuthor(id)) {
+        try {
+            authorsService.deleteAuthor(id);
             ioService.printString(String.format("Автор № [%s] удален. ", id));
-        } else {
+        } catch (Exception e) {
             ioService.printString("Автор не удален. ");
         }
     }

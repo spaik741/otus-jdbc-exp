@@ -16,14 +16,14 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "message")
     private String message;
     @Column(name = "date_message", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date messageDate;
     @JoinColumn(name = "id_book")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     private Book book;
 
     @Override
