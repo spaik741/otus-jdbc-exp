@@ -51,13 +51,11 @@ public class CommentCommands {
 
     @ShellMethod(value = "Get all comments", key = {"gac", "getAllComment"})
     public void getAll(long idBook) {
-        Optional<Book> bookOptional = booksService.getBookById(idBook);
-        if (bookOptional.isPresent()) {
-            List<Comment> comments = commentService.getAllComments(bookOptional.get());
-            if (CollectionUtils.isNotEmpty(comments)) {
-                ioService.printString("Комменты получены. " + comments);
-                return;
-            }
+        List<Comment> comments = commentService.getAllComments(idBook);
+        if (CollectionUtils.isNotEmpty(comments)) {
+            ioService.printString("Комменты получены. " + comments);
+            return;
+
         }
         ioService.printString("Комменты не найдены.");
     }
