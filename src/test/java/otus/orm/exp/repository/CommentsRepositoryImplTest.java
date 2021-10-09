@@ -1,4 +1,4 @@
-package otus.orm.exp.dao;
+package otus.orm.exp.repository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CommentsDAOImplTest {
+class CommentsRepositoryImplTest {
 
     @Autowired
-    private CommentsDAO commentsDAO;
+    private CommentsRepository repository;
     @Autowired
     private TestEntityManager em;
 
@@ -32,14 +32,14 @@ class CommentsDAOImplTest {
 
     @Test
     public void getCommentTest() {
-        Comment comment = commentsDAO.findById(FIRST).get();
+        Comment comment = repository.findById(FIRST).get();
         Comment expectedComment = em.find(Comment.class, FIRST);
         assertThat(comment).usingRecursiveComparison().isEqualTo(expectedComment);
     }
 
     @Test
     public void getAllCommentTest() {
-        assertThat(commentsDAO.findAllByBook(em.find(Book.class, FIRST))).hasSize(LIST_SIZE_1)
+        assertThat(repository.findAllByBookId(FIRST)).hasSize(LIST_SIZE_1)
                 .allMatch(c -> StringUtils.isNotBlank(c.getMessage()))
                 .allMatch(c -> c.getMessageDate() != null)
                 .allMatch(c -> c.getBook() != null);
@@ -47,23 +47,23 @@ class CommentsDAOImplTest {
 
     @Test
     public void deleteCommentTest() {
-        commentsDAO.deleteById(FIRST);
+        repository.deleteById(FIRST);
         assertThat(em.find(Comment.class, FIRST)).isNull();
     }
 
     @Test
     public void saveCommentTest() {
-        Comment comment = commentsDAO.save(new Comment(COMMENT, MESSAGE, new Date(), new Book()));
+        Comment comment = repository.save(new Comment(COMMENT, MESSAGE, new Date(), new Book()));
         Comment expectedComment = em.find(Comment.class, COMMENT);
-        assertEquals(LIST_SIZE_2, commentsDAO.findAll().size());
+        assertEquals(LIST_SIZE_2, repository.findAll().size());
         assertThat(comment).usingRecursiveComparison().isEqualTo(expectedComment);
     }
 
     @Test
     public void updateCommentTest() {
-        Comment comment = commentsDAO.save(new Comment(FIRST, MESSAGE, new Date(), new Book()));
+        Comment comment = repository.save(new Comment(FIRST, MESSAGE, new Date(), new Book()));
         Comment expectedComment = em.find(Comment.class, FIRST);
-        assertEquals(MESSAGE, commentsDAO.findById(FIRST).get().getMessage());
+        assertEquals(MESSAGE, repository.findById(FIRST).get().getMessage());
         assertThat(comment).usingRecursiveComparison().isEqualTo(expectedComment);
     }
 

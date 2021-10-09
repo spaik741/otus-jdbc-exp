@@ -3,7 +3,7 @@ package otus.orm.exp.service;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import otus.orm.exp.dao.GenresDAO;
+import otus.orm.exp.repository.GenresRepository;
 import otus.orm.exp.entity.Genre;
 
 import java.util.ArrayList;
@@ -13,15 +13,16 @@ import java.util.Optional;
 @Service
 public class GenreServiceImpl implements GenresService {
 
-    private final GenresDAO dao;
+    private final GenresRepository repository;
 
-    public GenreServiceImpl(GenresDAO dao) {
-        this.dao = dao;
+    public GenreServiceImpl(GenresRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Genre> getAllGenres() {
-        return CollectionUtils.isEmpty(dao.findAll()) ? new ArrayList<>() : dao.findAll();
+        List<Genre> genres = repository.findAll();
+        return CollectionUtils.isEmpty(genres) ? new ArrayList<>() : genres;
     }
 
     @Override
@@ -32,12 +33,12 @@ public class GenreServiceImpl implements GenresService {
     @Override
     @Transactional
     public void deleteGenre(long id) {
-        dao.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     @Transactional
     public Optional<Genre> saveGenre(Genre genre) {
-        return Optional.of(dao.save(genre));
+        return Optional.of(repository.save(genre));
     }
 }

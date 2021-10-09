@@ -1,16 +1,12 @@
-package otus.orm.exp.dao;
+package otus.orm.exp.repository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
-import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import otus.orm.exp.entity.Genre;
-
-import javax.persistence.PersistenceException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class GenresDAOImplTest {
+class GenresRepositoryImplTest {
 
     @Autowired
-    private GenresDAO dao;
+    private GenresRepository repository;
     @Autowired
     private TestEntityManager em;
 
@@ -33,33 +29,33 @@ class GenresDAOImplTest {
 
     @Test
     public void getGenreTest() {
-        Genre genre = dao.findById(FIRST_GENRE).get();
+        Genre genre = repository.findById(FIRST_GENRE).get();
         Genre expectedGenre = em.find(Genre.class, FIRST_GENRE);
         assertThat(genre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
     @Test
     public void getAllGenreTest() {
-        assertThat(dao.findAll()).hasSize(LIST_SIZE_1)
+        assertThat(repository.findAll()).hasSize(LIST_SIZE_1)
                 .allMatch(g -> StringUtils.isNotBlank(g.getGenre()));
     }
 
     @Test
     public void deleteGenreTest() {
-        dao.deleteById(FIRST_GENRE);
+        repository.deleteById(FIRST_GENRE);
     }
 
     @Test
     public void saveGenreTest() {
-        Genre genre = dao.save(new Genre(TWO_GENRE, GENRE));
+        Genre genre = repository.save(new Genre(TWO_GENRE, GENRE));
         Genre expectedGenre = em.find(Genre.class, TWO_GENRE);
-        assertEquals(LIST_SIZE_2, dao.findAll().size());
+        assertEquals(LIST_SIZE_2, repository.findAll().size());
         assertThat(genre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
     @Test
     public void updateGenreTest() {
-        Genre genre = dao.save(new Genre(FIRST_GENRE, GENRE));
+        Genre genre = repository.save(new Genre(FIRST_GENRE, GENRE));
         Genre expectedGenre = em.find(Genre.class, FIRST_GENRE);
         assertThat(genre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }

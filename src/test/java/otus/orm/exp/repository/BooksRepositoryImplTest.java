@@ -1,4 +1,4 @@
-package otus.orm.exp.dao;
+package otus.orm.exp.repository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
@@ -12,11 +12,10 @@ import otus.orm.exp.entity.Genre;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class BooksDAOImplTest {
+class BooksRepositoryImplTest {
 
     private static final int LIST_SIZE_3 = 3;
     private static final String BOOK_NAME = "Nothing";
@@ -24,21 +23,21 @@ class BooksDAOImplTest {
     private static final long TWO_BOOK = 4;
 
     @Autowired
-    private BooksDAO dao;
+    private BooksRepository repository;
 
     @Autowired
     private TestEntityManager em;
 
     @Test
     public void getBookTest() {
-        Book book = dao.findById(FIRST);
+        Book book = repository.findById(FIRST).get();
         Book expectedBook = em.find(Book.class, FIRST);
         assertThat(book).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
     public void getAllBooksTest() {
-        assertThat(dao.findAll()).hasSize(LIST_SIZE_3)
+        assertThat(repository.findAll()).hasSize(LIST_SIZE_3)
                 .allMatch(b -> StringUtils.isNotBlank(b.getName()))
                 .allMatch(b -> b.getAuthor() != null)
                 .allMatch(b -> b.getGenre() != null);
@@ -46,23 +45,23 @@ class BooksDAOImplTest {
 
     @Test
     public void deleteBookTest() {
-        dao.deleteById(FIRST);
+        repository.deleteById(FIRST);
         assertThat(em.find(Book.class, FIRST)).isNull();
     }
 
     @Test
     public void saveBookTest() {
-        Book book = dao.save(new Book(TWO_BOOK, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
+        Book book = repository.save(new Book(TWO_BOOK, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
         Book expectedBook = em.find(Book.class, TWO_BOOK);
-        assertEquals(TWO_BOOK, dao.findAll().size());
+        assertEquals(TWO_BOOK, repository.findAll().size());
         assertThat(book).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
     public void updateBookTest() {
-        Book book = dao.save(new Book(FIRST, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
+        Book book = repository.save(new Book(FIRST, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
         Book expectedBook = em.find(Book.class, FIRST);
-        assertEquals(BOOK_NAME, dao.findById(1).getName());
+        assertEquals(BOOK_NAME, repository.findById(1).get().getName());
         assertThat(book).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 }

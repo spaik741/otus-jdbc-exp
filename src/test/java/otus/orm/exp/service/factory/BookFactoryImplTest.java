@@ -32,7 +32,7 @@ class BookFactoryImplTest {
     }
 
     @Test
-    public void testCreateComment() {
+    public void testCreateBook() {
         given(authorsService.getAuthorById(LONG_VAL)).willReturn(Optional.of(new Author()));
         given(genresService.getGenreById(LONG_VAL)).willReturn(Optional.of(new Genre()));
         Optional<Book> book = bookFactory.createBook("name", LONG_VAL, LONG_VAL);
