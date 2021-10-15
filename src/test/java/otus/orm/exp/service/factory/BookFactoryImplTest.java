@@ -2,6 +2,8 @@ package otus.orm.exp.service.factory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import otus.orm.exp.entity.Author;
 import otus.orm.exp.entity.Book;
@@ -17,7 +19,7 @@ import static org.mockito.Mockito.mock;
 
 class BookFactoryImplTest {
 
-    private final static Long LONG_VAL = 1L;
+    private final static String LONG_VAL = "1";
 
     @MockBean
     private AuthorsService authorsService;

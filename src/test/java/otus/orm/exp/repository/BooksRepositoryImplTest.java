@@ -3,9 +3,9 @@ package otus.orm.exp.repository;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.data.mongodb.core.MongoOperations;
 import otus.orm.exp.entity.Author;
 import otus.orm.exp.entity.Book;
 import otus.orm.exp.entity.Genre;
@@ -13,31 +13,31 @@ import otus.orm.exp.entity.Genre;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DataMongoTest
+@EnableConfigurationProperties
 class BooksRepositoryImplTest {
 
-    private static final int LIST_SIZE_3 = 3;
     private static final String BOOK_NAME = "Nothing";
-    private static final long FIRST = 1;
-    private static final long TWO_BOOK = 4;
+    private static final String FIRST = "1";
+    private static final String TWO = "2";
+    private static final String FOUR = "4";
 
     @Autowired
     private BooksRepository repository;
 
     @Autowired
-    private TestEntityManager em;
+    private MongoOperations mongoOperations;
 
     @Test
     public void getBookTest() {
         Book book = repository.findById(FIRST).get();
-        Book expectedBook = em.find(Book.class, FIRST);
+        Book expectedBook = mongoOperations.findById(FIRST, Book.class);
         assertThat(book).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
     public void getAllBooksTest() {
-        assertThat(repository.findAll()).hasSize(LIST_SIZE_3)
+        assertThat(repository.findAll()).isNotEmpty()
                 .allMatch(b -> StringUtils.isNotBlank(b.getName()))
                 .allMatch(b -> b.getAuthor() != null)
                 .allMatch(b -> b.getGenre() != null);
@@ -45,23 +45,22 @@ class BooksRepositoryImplTest {
 
     @Test
     public void deleteBookTest() {
-        repository.deleteById(FIRST);
-        assertThat(em.find(Book.class, FIRST)).isNull();
+        repository.deleteById(TWO);
+        assertThat(mongoOperations.findById(TWO, Book.class)).isNull();
     }
 
     @Test
     public void saveBookTest() {
-        Book book = repository.save(new Book(TWO_BOOK, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
-        Book expectedBook = em.find(Book.class, TWO_BOOK);
-        assertEquals(TWO_BOOK, repository.findAll().size());
+        Book book = repository.save(new Book(FOUR, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
+        Book expectedBook = mongoOperations.findById(FOUR, Book.class);
         assertThat(book).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
     public void updateBookTest() {
         Book book = repository.save(new Book(FIRST, BOOK_NAME, new Author(FIRST, "a", "b"), new Genre(FIRST, "b")));
-        Book expectedBook = em.find(Book.class, FIRST);
-        assertEquals(BOOK_NAME, repository.findById(1).get().getName());
+        Book expectedBook = mongoOperations.findById(FIRST, Book.class);
+        assertEquals(BOOK_NAME, repository.findById(FIRST).get().getName());
         assertThat(book).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 }

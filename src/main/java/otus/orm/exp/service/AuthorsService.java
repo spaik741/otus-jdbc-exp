@@ -9,9 +9,9 @@ public interface AuthorsService {
 
     List<Author> getAllAuthors();
 
-    Optional<Author> getAuthorById(long id);
+    Optional<Author> getAuthorById(String id);
 
-    void deleteAuthor(long id);
+    void deleteAuthor(String id);
 
     Optional<Author> saveAuthor(Author author);
 }

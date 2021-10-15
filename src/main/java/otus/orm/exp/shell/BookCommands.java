@@ -29,8 +29,8 @@ public class BookCommands {
 
     @ShellMethod(value = "Save book", key = {"sb", "saveBook", "ib", "insertBook"})
     public void save(@ShellOption(value = "-n") String name,
-                     @ShellOption(value = "-a") long idAuthor,
-                     @ShellOption(value = "-d") long idGenre) {
+                     @ShellOption(value = "-a") String idAuthor,
+                     @ShellOption(value = "-d") String idGenre) {
         Optional<Book> book = bookFactory.createBook(name, idAuthor, idGenre);
         if (book.isPresent()) {
             try {
@@ -43,7 +43,7 @@ public class BookCommands {
     }
 
     @ShellMethod(value = "Get book by id", key = {"gb", "getBook"})
-    public void get(long id) {
+    public void get(String id) {
         Optional<Book> book = booksService.getBookById(id);
         String answerText = book.map(value -> "Книга получена. " + value).orElse("Книга не получена.");
         ioService.printString(answerText);
@@ -60,7 +60,7 @@ public class BookCommands {
     }
 
     @ShellMethod(value = "Delete book", key = {"db", "deleteBook"})
-    public void delete(long id) {
+    public void delete(String id) {
         try {
             booksService.deleteBook(id);
             ioService.printString(String.format("Книга № [%s] удалена. ", id));

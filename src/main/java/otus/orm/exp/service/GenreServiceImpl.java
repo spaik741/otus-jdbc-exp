@@ -20,19 +20,21 @@ public class GenreServiceImpl implements GenresService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Genre> getAllGenres() {
         List<Genre> genres = repository.findAll();
         return CollectionUtils.isEmpty(genres) ? new ArrayList<>() : genres;
     }
 
     @Override
-    public Optional<Genre> getGenreById(long id) {
-        return getAllGenres().stream().filter(b -> b.getId() == id).findFirst();
+    @Transactional(readOnly = true)
+    public Optional<Genre> getGenreById(String id) {
+        return getAllGenres().stream().filter(b -> b.getId().equals(id)).findFirst();
     }
 
     @Override
     @Transactional
-    public void deleteGenre(long id) {
+    public void deleteGenre(String id) {
         repository.deleteById(id);
     }
 

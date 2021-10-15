@@ -14,9 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+
 class CommentFactoryImplTest {
 
-    private static final Long LONG_VAL = 1L;
+    private static final String LONG_VAL = "1";
 
     @MockBean
     private BooksService bookService;

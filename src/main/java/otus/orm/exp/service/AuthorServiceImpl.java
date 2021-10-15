@@ -28,13 +28,13 @@ public class AuthorServiceImpl implements AuthorsService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Author> getAuthorById(long id) {
-        return getAllAuthors().stream().filter(b -> b.getId() == id).findFirst();
+    public Optional<Author> getAuthorById(String id) {
+        return getAllAuthors().stream().filter(b -> b.getId().equals(id)).findFirst();
     }
 
     @Override
     @Transactional
-    public void deleteAuthor(long id) {
+    public void deleteAuthor(String id) {
         repository.deleteById(id);
     }
 

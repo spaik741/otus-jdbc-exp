@@ -22,7 +22,7 @@ public class GenreCommands {
     }
 
     @ShellMethod(value = "Save genre", key = {"sg", "saveGenre", "ig", "insertGenre"})
-    public void save(long id, String name) {
+    public void save(String id, String name) {
         Genre genre = new Genre(id, name);
         try {
             genresService.saveGenre(genre);
@@ -33,7 +33,7 @@ public class GenreCommands {
     }
 
     @ShellMethod(value = "Get genre by id", key = {"gg", "getGenre"})
-    public void get(long id) {
+    public void get(String id) {
         Optional<Genre> genre = genresService.getGenreById(id);
         String answerText = genre.map(value -> "Жанр получен. " + value).orElse("Жанр не получен.");
         ioService.printString(answerText);
@@ -50,7 +50,7 @@ public class GenreCommands {
     }
 
     @ShellMethod(value = "Delete genre", key = {"dg", "deleteGenre"})
-    public void delete(long id) {
+    public void delete(String id) {
         try {
             genresService.deleteGenre(id);
             ioService.printString(String.format("Жанр № [%s] удален. ", id));

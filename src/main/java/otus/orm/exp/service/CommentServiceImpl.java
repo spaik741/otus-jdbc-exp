@@ -22,21 +22,27 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Comment> getAllComments(long idBook) {
+    public List<Comment> getAllComments(String idBook) {
         List<Comment> comments = repository.findAllByBookId(idBook);
         return CollectionUtils.isEmpty(comments) ? new ArrayList<>() : comments;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Comment> getCommentById(long id) {
-        return repository.findAll().stream().filter(b -> b.getId() == id).findFirst();
+    public Optional<Comment> getCommentById(String id) {
+        return repository.findAll().stream().filter(b -> b.getId().equals(id)).findFirst();
     }
 
     @Override
     @Transactional
-    public void deleteComment(long id) {
+    public void deleteComment(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCommentByBookId(String idBook) {
+        repository.deleteByBookId(idBook);
     }
 
     @Override

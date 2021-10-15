@@ -3,19 +3,18 @@ package otus.orm.exp.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
-@Entity
-@Table(name = "genres")
+@Document(collection = "genres")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "genre")
+    private String id;
+    @Field(value = "genre")
     private String genre;
 
     @Override

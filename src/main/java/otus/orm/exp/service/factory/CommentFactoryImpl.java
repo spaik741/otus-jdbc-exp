@@ -20,7 +20,7 @@ public class CommentFactoryImpl implements CommentFactory {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Comment> createComment(String text, Date date, long idBook) {
+    public Optional<Comment> createComment(String text, Date date, String idBook) {
         Comment comment = null;
         Optional<Book> bookOptional = booksService.getBookById(idBook);
         if (bookOptional.isPresent()) {
