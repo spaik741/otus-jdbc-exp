@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 
 class CommentFactoryImplTest {
 
-    private static final String LONG_VAL = "1";
+    private static final String STRING_VAL = "1";
 
     @MockBean
     private BooksService bookService;
@@ -31,8 +31,8 @@ class CommentFactoryImplTest {
 
     @Test
     public void testCreateComment() {
-        given(bookService.getBookById(LONG_VAL)).willReturn(Optional.of(new Book()));
-        Optional<Comment> comment = commentFactory.createComment("message", new Date(), LONG_VAL);
+        given(bookService.getBookById(STRING_VAL)).willReturn(Optional.of(new Book()));
+        Optional<Comment> comment = commentFactory.createComment("message", new Date(), STRING_VAL);
         assertThat(comment.get()).isNotNull().matches(c -> c.getMessage().equals("message"));
     }
 

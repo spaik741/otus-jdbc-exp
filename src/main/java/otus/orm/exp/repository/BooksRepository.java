@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface BooksRepository extends MongoRepository<Book, String> {
 
-    Optional<Book> findById(long id);
+    Optional<Book> findById(String id);
 
-    void deleteById(long id);
+    void deleteById(String id);
 
 }

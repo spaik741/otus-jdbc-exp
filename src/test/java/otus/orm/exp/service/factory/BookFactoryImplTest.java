@@ -2,8 +2,6 @@ package otus.orm.exp.service.factory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import otus.orm.exp.entity.Author;
 import otus.orm.exp.entity.Book;
@@ -19,7 +17,7 @@ import static org.mockito.Mockito.mock;
 
 class BookFactoryImplTest {
 
-    private final static String LONG_VAL = "1";
+    private final static String STRING_VAL = "1";
 
     @MockBean
     private AuthorsService authorsService;
@@ -35,9 +33,9 @@ class BookFactoryImplTest {
 
     @Test
     public void testCreateBook() {
-        given(authorsService.getAuthorById(LONG_VAL)).willReturn(Optional.of(new Author()));
-        given(genresService.getGenreById(LONG_VAL)).willReturn(Optional.of(new Genre()));
-        Optional<Book> book = bookFactory.createBook("name", LONG_VAL, LONG_VAL);
+        given(authorsService.getAuthorById(STRING_VAL)).willReturn(Optional.of(new Author()));
+        given(genresService.getGenreById(STRING_VAL)).willReturn(Optional.of(new Genre()));
+        Optional<Book> book = bookFactory.createBook("name", STRING_VAL, STRING_VAL);
         assertThat(book.get()).isNotNull().matches(b -> b.getName().equals("name"));
     }
 
