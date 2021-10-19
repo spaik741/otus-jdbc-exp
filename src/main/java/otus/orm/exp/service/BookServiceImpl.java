@@ -28,13 +28,13 @@ public class BookServiceImpl implements BooksService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Book> getBookById(long id) {
-        return getAllBooks().stream().filter(b -> b.getId() == id).findFirst();
+    public Optional<Book> getBookById(String id) {
+        return getAllBooks().stream().filter(b -> b.getId().equals(id)).findFirst();
     }
 
     @Override
     @Transactional
-    public void deleteBook(long id) {
+    public void deleteBook(String id) {
         repository.deleteById(id);
     }
 

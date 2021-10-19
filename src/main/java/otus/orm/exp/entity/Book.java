@@ -3,42 +3,56 @@ package otus.orm.exp.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.aop.target.LazyInitTargetSource;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
-@Table(name = "books")
-@AllArgsConstructor
+
 @NoArgsConstructor
-@NamedEntityGraph(name = "BookGraph",
-        attributeNodes = {
-                @NamedAttributeNode("genre"),
-                @NamedAttributeNode("author")
-        })
+@Document(collection = "books")
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name")
+    private String id;
+    @Field(value = "name")
     private String name;
-    @JoinColumn(name = "id_author")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Field(value = "id_author")
     private Author author;
-    @JoinColumn(name = "id_genre")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Field(value = "id_genre")
     private Genre genre;
+    @DBRef
+    @Field(value = "comments")
+    private List<Comment> comments = new ArrayList<>();
 
     @Override
     public String toString() {
-        return "Book: " +
-                "id=" + id +
+        return "Book{" +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", author=" + author +
-                ", genre=" + genre;
+                ", genre=" + genre +
+                ", comments=" + comments +
+                '}';
+    }
+
+    public Book(String id, String name, Author author, Genre genre) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public Book(String id, String name, Author author, Genre genre, List<Comment> comments) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.genre = genre;
+        this.comments = comments;
     }
 }

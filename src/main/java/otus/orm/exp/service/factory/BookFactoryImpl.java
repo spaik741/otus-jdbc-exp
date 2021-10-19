@@ -23,7 +23,7 @@ public class BookFactoryImpl implements BookFactory {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Book> createBook(String name, long idAuthor, long idGenre) {
+    public Optional<Book> createBook(String name, String idAuthor, String idGenre) {
         Optional<Author> author = authorsService.getAuthorById(idAuthor);
         Optional<Genre> genre = genresService.getGenreById(idGenre);
         Book book = null;

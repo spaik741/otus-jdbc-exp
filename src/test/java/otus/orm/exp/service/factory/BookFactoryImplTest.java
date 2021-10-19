@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 
 class BookFactoryImplTest {
 
-    private final static Long LONG_VAL = 1L;
+    private final static String STRING_VAL = "1";
 
     @MockBean
     private AuthorsService authorsService;
@@ -33,9 +33,9 @@ class BookFactoryImplTest {
 
     @Test
     public void testCreateBook() {
-        given(authorsService.getAuthorById(LONG_VAL)).willReturn(Optional.of(new Author()));
-        given(genresService.getGenreById(LONG_VAL)).willReturn(Optional.of(new Genre()));
-        Optional<Book> book = bookFactory.createBook("name", LONG_VAL, LONG_VAL);
+        given(authorsService.getAuthorById(STRING_VAL)).willReturn(Optional.of(new Author()));
+        given(genresService.getGenreById(STRING_VAL)).willReturn(Optional.of(new Genre()));
+        Optional<Book> book = bookFactory.createBook("name", STRING_VAL, STRING_VAL);
         assertThat(book.get()).isNotNull().matches(b -> b.getName().equals("name"));
     }
 

@@ -22,7 +22,7 @@ public class AuthorCommands {
     }
 
     @ShellMethod(value = "Save author", key = {"sa", "saveAuthor", "ia", "insertAuthor"})
-    public void save(long id, String firstName, String lastName) {
+    public void save(String id, String firstName, String lastName) {
         Author author = new Author(id, firstName, lastName);
         try {
             authorsService.saveAuthor(author);
@@ -33,7 +33,7 @@ public class AuthorCommands {
     }
 
     @ShellMethod(value = "Get author by id", key = {"ga", "getAuthor"})
-    public void get(long id) {
+    public void get(String id) {
         Optional<Author> author = authorsService.getAuthorById(id);
         String answerText = author.map(value -> "Автор получен. " + value).orElse("Автор не получен.");
         ioService.printString(answerText);
@@ -50,7 +50,7 @@ public class AuthorCommands {
     }
 
     @ShellMethod(value = "Delete author", key = {"da", "deleteAuthor"})
-    public void delete(long id) {
+    public void delete(String id) {
         try {
             authorsService.deleteAuthor(id);
             ioService.printString(String.format("Автор № [%s] удален. ", id));

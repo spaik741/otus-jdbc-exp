@@ -5,5 +5,5 @@ import otus.orm.exp.entity.Book;
 import java.util.Optional;
 
 public interface BookFactory {
-    Optional<Book> createBook(String name, long idAuthor, long idGenre);
+    Optional<Book> createBook(String name, String idAuthor, String idGenre);
 }

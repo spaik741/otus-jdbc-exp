@@ -3,27 +3,26 @@ package otus.orm.exp.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "comments")
+@Document(collection = "comments")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "message")
+    private String id;
+    @Field(value = "message")
     private String message;
-    @Column(name = "date_message", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Field(value = "date_message")
     private Date messageDate;
-    @JoinColumn(name = "id_book")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @DBRef
+    @Field(value = "id_book")
     private Book book;
 
     @Override
