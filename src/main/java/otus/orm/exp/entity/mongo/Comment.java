@@ -1,4 +1,4 @@
-package otus.orm.exp.entity;
+package otus.orm.exp.entity.mongo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

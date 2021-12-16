@@ -3,8 +3,8 @@ package otus.orm.exp.service;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import otus.orm.exp.repository.CommentsRepository;
-import otus.orm.exp.entity.Comment;
+import otus.orm.exp.repository.mongo.CommentsRepository;
+import otus.orm.exp.entity.mongo.Comment;
 
 import java.util.ArrayList;
 import java.util.List;

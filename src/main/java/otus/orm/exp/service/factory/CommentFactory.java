@@ -1,6 +1,6 @@
 package otus.orm.exp.service.factory;
 
-import otus.orm.exp.entity.Comment;
+import otus.orm.exp.entity.mongo.Comment;
 
 import java.util.Date;
 import java.util.Optional;

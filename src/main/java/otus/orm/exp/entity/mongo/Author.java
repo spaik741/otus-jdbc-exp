@@ -1,4 +1,4 @@
-package otus.orm.exp.entity;
+package otus.orm.exp.entity.mongo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,19 +8,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
-@Document(collection = "genres")
+@Document(collection = "authors")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Genre {
+public class Author {
     @Id
     private String id;
-    @Field(value = "genre")
-    private String genre;
+    @Field(value = "f_name")
+    private String firstName;
+    @Field(value = "l_name")
+    private String lastName;
 
     @Override
     public String toString() {
-        return "Genre:" +
+        return "Author:" +
                 "id=" + id +
-                ", genre='" + genre + '.';
+                ", firstName='" + firstName +
+                ", lastName='" + lastName + '.';
     }
 }

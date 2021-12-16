@@ -4,7 +4,7 @@ import lombok.val;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeDeleteEvent;
 import org.springframework.stereotype.Component;
-import otus.orm.exp.entity.Book;
+import otus.orm.exp.entity.mongo.Book;
 import otus.orm.exp.service.CommentService;
 
 @Component

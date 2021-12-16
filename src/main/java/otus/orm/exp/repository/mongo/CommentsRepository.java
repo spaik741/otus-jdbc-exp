@@ -1,7 +1,7 @@
-package otus.orm.exp.repository;
+package otus.orm.exp.repository.mongo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import otus.orm.exp.entity.Comment;
+import otus.orm.exp.entity.mongo.Comment;
 
 import java.util.List;
 

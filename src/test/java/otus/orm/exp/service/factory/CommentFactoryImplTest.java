@@ -3,8 +3,8 @@ package otus.orm.exp.service.factory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import otus.orm.exp.entity.Book;
-import otus.orm.exp.entity.Comment;
+import otus.orm.exp.entity.mongo.Book;
+import otus.orm.exp.entity.mongo.Comment;
 import otus.orm.exp.service.BooksService;
 
 import java.util.Date;

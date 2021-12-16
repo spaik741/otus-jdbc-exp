@@ -3,10 +3,10 @@ package otus.orm.exp.repository;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoOperations;
-import otus.orm.exp.entity.Author;
+import otus.orm.exp.entity.mongo.Author;
+import otus.orm.exp.repository.mongo.AuthorsRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

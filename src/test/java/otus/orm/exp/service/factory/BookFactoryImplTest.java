@@ -3,9 +3,9 @@ package otus.orm.exp.service.factory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import otus.orm.exp.entity.Author;
-import otus.orm.exp.entity.Book;
-import otus.orm.exp.entity.Genre;
+import otus.orm.exp.entity.mongo.Author;
+import otus.orm.exp.entity.mongo.Book;
+import otus.orm.exp.entity.mongo.Genre;
 import otus.orm.exp.service.AuthorsService;
 import otus.orm.exp.service.GenresService;
 

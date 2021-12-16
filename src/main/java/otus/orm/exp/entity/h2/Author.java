@@ -1,22 +1,23 @@
-package otus.orm.exp.entity;
+package otus.orm.exp.entity.h2;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+
+import javax.persistence.*;
 
 @Data
-@Document(collection = "authors")
+@Entity
+@Table(name = "authors")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Author {
     @Id
-    private String id;
-    @Field(value = "f_name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "f_name")
     private String firstName;
-    @Field(value = "l_name")
+    @Column(name = "l_name")
     private String lastName;
 
     @Override
@@ -24,6 +25,6 @@ public class Author {
         return "Author:" +
                 "id=" + id +
                 ", firstName='" + firstName +
-                ", lastName='" + lastName + '.';
+                ", lastName='" + lastName +'.';
     }
 }

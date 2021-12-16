@@ -3,10 +3,10 @@ package otus.orm.exp.service;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import otus.orm.exp.entity.Book;
-import otus.orm.exp.repository.AuthorsRepository;
-import otus.orm.exp.entity.Author;
-import otus.orm.exp.repository.BooksRepository;
+import otus.orm.exp.entity.mongo.Book;
+import otus.orm.exp.repository.mongo.AuthorsRepository;
+import otus.orm.exp.entity.mongo.Author;
+import otus.orm.exp.repository.mongo.BooksRepository;
 
 import java.util.ArrayList;
 import java.util.List;

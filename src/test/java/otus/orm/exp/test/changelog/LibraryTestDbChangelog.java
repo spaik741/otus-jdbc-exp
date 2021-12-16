@@ -4,10 +4,10 @@ import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.decorator.impl.MongockTemplate;
 import com.mongodb.client.MongoDatabase;
-import otus.orm.exp.entity.Author;
-import otus.orm.exp.entity.Book;
-import otus.orm.exp.entity.Comment;
-import otus.orm.exp.entity.Genre;
+import otus.orm.exp.entity.mongo.Author;
+import otus.orm.exp.entity.mongo.Book;
+import otus.orm.exp.entity.mongo.Comment;
+import otus.orm.exp.entity.mongo.Genre;
 
 import java.util.Arrays;
 import java.util.Date;

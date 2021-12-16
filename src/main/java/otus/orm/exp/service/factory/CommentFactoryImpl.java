@@ -2,8 +2,8 @@ package otus.orm.exp.service.factory;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import otus.orm.exp.entity.Book;
-import otus.orm.exp.entity.Comment;
+import otus.orm.exp.entity.mongo.Book;
+import otus.orm.exp.entity.mongo.Comment;
 import otus.orm.exp.service.BooksService;
 
 import java.util.Date;

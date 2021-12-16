@@ -1,6 +1,6 @@
 package otus.orm.exp.service;
 
-import otus.orm.exp.entity.Author;
+import otus.orm.exp.entity.mongo.Author;
 
 import java.util.List;
 import java.util.Optional;

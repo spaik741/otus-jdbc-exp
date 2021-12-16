@@ -2,9 +2,9 @@ package otus.orm.exp.service.factory;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import otus.orm.exp.entity.Author;
-import otus.orm.exp.entity.Book;
-import otus.orm.exp.entity.Genre;
+import otus.orm.exp.entity.mongo.Author;
+import otus.orm.exp.entity.mongo.Book;
+import otus.orm.exp.entity.mongo.Genre;
 import otus.orm.exp.service.AuthorsService;
 import otus.orm.exp.service.GenresService;
 

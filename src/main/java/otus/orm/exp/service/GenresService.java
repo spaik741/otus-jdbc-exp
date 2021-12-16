@@ -1,6 +1,6 @@
 package otus.orm.exp.service;
 
-import otus.orm.exp.entity.Genre;
+import otus.orm.exp.entity.mongo.Genre;
 
 import java.util.List;
 import java.util.Optional;
