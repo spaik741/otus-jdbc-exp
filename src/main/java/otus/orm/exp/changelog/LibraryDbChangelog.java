@@ -37,16 +37,16 @@ public class LibraryDbChangelog {
 
     @ChangeSet(order = "003", id = "insertInAuthorsDb", author = "admin", runAlways = true)
     public void insertValueInAuthorsDb(MongockTemplate template) {
-        Author author1 = template.save(new Author("1", "Stephen", "King"));
-        Author author2 = template.save(new Author("2", "Suzanne", "Collins"));
+        Author author1 = template.save(new Author("1", "Suzanne", "Collins"));
+        Author author2 = template.save(new Author("2", "Stephen", "King"));
         authorList = Arrays.asList(author1, author2);
     }
 
     @ChangeSet(order = "004", id = "insertInBooksDb", author = "admin", runAlways = true)
     public void insertValueInBooksDb(MongockTemplate template) {
-        Book book1 = template.save(new Book("1", "The Hunger Games", authorList.get(1), genreList.get(0)));
-        Book book2 = template.save(new Book("2", "Pet Sematary", authorList.get(0), genreList.get(0)));
-        Book book3 = template.save(new Book("3", "Shine", authorList.get(0), genreList.get(1)));
+        Book book1 = template.save(new Book("1", "The Hunger Games", authorList.get(0), genreList.get(0)));
+        Book book2 = template.save(new Book("2", "Pet Sematary", authorList.get(1), genreList.get(0)));
+        Book book3 = template.save(new Book("3", "Shine", authorList.get(1), genreList.get(1)));
         bookList = Arrays.asList(book1, book2, book3);
     }
 

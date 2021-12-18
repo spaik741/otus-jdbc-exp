@@ -2,7 +2,6 @@ package otus.orm.exp.batch.writers;
 
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import otus.orm.exp.entity.h2.AuthorTo;
 import otus.orm.exp.entity.h2.BookTo;
 import otus.orm.exp.entity.h2.GenreTo;
@@ -34,4 +33,5 @@ public class BookWriter implements ItemWriter<BookTo> {
             booksRepository.save(book);
         }
     }
+
 }
