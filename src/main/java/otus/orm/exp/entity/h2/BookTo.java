@@ -13,10 +13,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @NamedEntityGraph(name = "BookGraph",
         attributeNodes = {
-                @NamedAttributeNode("genre"),
-                @NamedAttributeNode("author")
+                @NamedAttributeNode("genreTo"),
+                @NamedAttributeNode("authorTo")
         })
-public class Book {
+public class BookTo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +25,17 @@ public class Book {
     private String name;
     @JoinColumn(name = "id_author")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Author author;
+    private AuthorTo authorTo;
     @JoinColumn(name = "id_genre")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Genre genre;
+    private GenreTo genreTo;
 
     @Override
     public String toString() {
         return "Book: " +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", author=" + author +
-                ", genre=" + genre;
+                ", author=" + authorTo +
+                ", genre=" + genreTo;
     }
 }

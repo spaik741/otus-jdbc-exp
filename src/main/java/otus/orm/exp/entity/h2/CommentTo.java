@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "comments")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class CommentTo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +24,7 @@ public class Comment {
     private Date messageDate;
     @JoinColumn(name = "id_book")
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    private Book book;
+    private BookTo bookTo;
 
     @Override
     public String toString() {
@@ -32,6 +32,6 @@ public class Comment {
                 "id=" + id +
                 ", message='" + message + '\'' +
                 ", messageDate=" + messageDate +
-                ", book=" + book;
+                ", book=" + bookTo;
     }
 }

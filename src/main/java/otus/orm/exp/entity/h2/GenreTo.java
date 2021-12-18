@@ -8,23 +8,20 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "authors")
+@Table(name = "genres")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Author {
+public class GenreTo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "f_name")
-    private String firstName;
-    @Column(name = "l_name")
-    private String lastName;
+    @Column(name = "genre")
+    private String genre;
 
     @Override
     public String toString() {
-        return "Author:" +
+        return "Genre:" +
                 "id=" + id +
-                ", firstName='" + firstName +
-                ", lastName='" + lastName +'.';
+                ", genre='" + genre + '.';
     }
 }

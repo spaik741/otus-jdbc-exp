@@ -12,6 +12,12 @@ spring:
       ddl-auto: none
 
     show-sql: true
+  batch:
+    job:
+      enabled: false
+  shell:
+    interactive:
+      enabled: true
 
   data:
     mongodb:
